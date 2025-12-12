@@ -37,7 +37,7 @@ It supports:
 
 ## Project Structure
 
-```
+``
 winjar/
 ├── app.py # Flask routes + rendering
 ├── ai.py # Mood prompts, streak messages, weekly summaries
@@ -47,7 +47,7 @@ winjar/
 └── data/
 └── entries.json # Auto-generated data file
 └── README.md 
-```
+``
 
 
 # Running WinJar (VS Code Setup Instructions)
@@ -70,12 +70,16 @@ cd winjar
 ```
 ## 3 Create a Virtual Environment
 **Mac / Linux**
-```python3 -m venv venv
-source venv/bin/activate```
+```
+python3 -m venv venv
+source venv/bin/activate
+```
 
 **Windows**
-```python -m venv venv
-venv\Scripts\activate```
+```
+python -m venv venv
+venv\Scripts\activate
+```
 
 You should now see:
 ```(venv)```
@@ -106,4 +110,4 @@ Windows
 ```venv\Scripts\activate```
 
 3. Run the App
-```python app.py```
+``python app.py```
