@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "id": "eb92297d-e6e8-446b-80f9-54abc5eede1d",
+      "text": "I came to school today",
+      "details": "The weather was cold, I was so tired after the house move and the guests we had at home.",
+      "mood": "",
+      "category": "",
+      "date": "2025-11-18",
+      "timestamp": "2025-11-18 15:55"
+    },
+    {
+      "id": "ad9c7eb9-ce93-4458-8396-5ffe4b0604d6",
+      "text": "try coming to school",
+      "details": "",
+      "mood": "tired",
+      "category": "school",
+      "date": "2025-11-18",
+      "timestamp": "2025-11-18 16:03"
+    }
+  ]
+}
