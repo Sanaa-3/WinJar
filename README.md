@@ -107,4 +107,4 @@ Windows
 `venv\Scripts\activate`
 
 3. Run the App
-`python app.py``
+`python app.py`
