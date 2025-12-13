@@ -26,6 +26,24 @@
       "category": "school",
       "date": "2025-12-12",
       "timestamp": "2025-12-12 15:00"
+    },
+    {
+      "id": "af6212a9-452d-48be-80e6-09bd7afa63ae",
+      "text": "I started reading a book at night.",
+      "details": "building a new habit.",
+      "mood": "focused",
+      "category": "faith",
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12 19:43"
+    },
+    {
+      "id": "269148f8-5d26-4825-9661-063100614d48",
+      "text": "I finished my final exam project!",
+      "details": "",
+      "mood": "grateful",
+      "category": "school",
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12 19:55"
     }
   ]
 }
