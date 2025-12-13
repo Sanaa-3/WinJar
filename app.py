@@ -15,6 +15,7 @@ from io import BytesIO
 import json, datetime as dt
 from data_access import DataAccess
 from ai import mood_prompt, adaptive_streak_banner, progress_summary
+from collections import defaultdict
 
 app = Flask(__name__)
 db = DataAccess()
@@ -28,6 +29,15 @@ def index():
     # last 7 days → summary text
     last_week = db.list_entries_last_n_days(7)
     weekly_summary = progress_summary(last_week) if last_week else "No entries yet—today’s a great day to start!"
+
+    # Group last-week entries by date for the history section
+    entries_by_date = defaultdict(list)
+    for e in last_week:
+        entries_by_date[e["date"]].append(e)
+
+    # Sort dates newest → oldest
+    history_dates = sorted(entries_by_date.keys(), reverse=True)
+
 
     # streak + adaptive banner text
     streak = db.get_streak_days()
@@ -46,8 +56,11 @@ def index():
         banner=banner,
         weekly_summary=weekly_summary,
         prompt=prompt,
-        new_id=new_id  # used to reveal the inline elaboration form
+        new_id=new_id,
+        history_dates=history_dates,
+        history=entries_by_date
     )
+
 
 @app.route("/add", methods=["POST"])
 def add():
@@ -94,6 +107,25 @@ def export():
 def health():
     """Simple healthcheck endpoint."""
     return jsonify({"status": "ok"})
+
+@app.route("/history")
+def full_history():
+    """Show all wins, grouped by date, on a separate page."""
+    entries = db.list_entries()  # all stored entries
+
+    entries_by_date = defaultdict(list)
+    for e in entries:
+        entries_by_date[e["date"]].append(e)
+
+    # Newest date first
+    history_dates = sorted(entries_by_date.keys(), reverse=True)
+
+    return render_template(
+        "history.html",
+        history_dates=history_dates,
+        history=entries_by_date,
+    )
+
 
 if __name__ == "__main__":
     # Debug=True gives you nice error pages and auto-reload in development.

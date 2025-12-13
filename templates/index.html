@@ -4,144 +4,166 @@
   <meta charset="utf-8">
   <title>WinJar</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    :root{
-      --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569;
-      --primary:#2563eb; --ring:#dbeafe; --border:#e5e7eb; --pill:#eef2ff;
-    }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-         color:var(--text); background:var(--bg);}
-
-    .wrap{min-height:100vh; display:flex; flex-direction:column}
-    header{padding:20px 24px; background:linear-gradient(180deg,#ffffff,#f1f5f9); border-bottom:1px solid var(--border)}
-    .title{margin:0 0 6px 0; font-weight:800; letter-spacing:.2px}
-    .sub{margin:0; color:var(--muted); font-size:14px}
-
-    .content{width:100%; max-width:1100px; margin:20px auto; padding:0 20px 40px;
-             display:grid; grid-template-columns:1.4fr 1fr; gap:20px}
-    @media (max-width:900px){ .content{grid-template-columns:1fr} }
-
-    .card{background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:0 1px 2px rgba(0,0,0,.04)}
-    .card-body{padding:16px 18px}
-    .card h3{margin:0 0 10px}
-
-    .banner{display:flex; gap:10px; align-items:center; border:1px solid var(--ring); background:#f8fbff;
-            padding:10px 12px; border-radius:10px; margin:8px 0; font-size:14px}
-
-    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:8px}
-    input[type=text]{flex:1 1 260px; padding:12px; border:1px solid var(--border); border-radius:10px; outline:none; background:#fff}
-    input[type=text]:focus{border-color:var(--primary); box-shadow:0 0 0 3px var(--ring)}
-    select{padding:11px 12px; border:1px solid var(--border); border-radius:10px; background:#fff}
-    button{padding:12px 16px; border:1px solid var(--primary); background:var(--primary); color:#fff; border-radius:10px; cursor:pointer; font-weight:600}
-    button:hover{filter:brightness(0.98)}
-
-    .entry{border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin:8px 0; background:#fff}
-    .entry .meta{font-size:12px; color:var(--muted)}
-    .pill{font-size:12px; background:var(--pill); padding:2px 8px; border-radius:999px; margin-left:6px}
-
-    textarea{width:100%; min-height:90px; padding:10px; border:1px solid var(--border); border-radius:10px}
-  </style>
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 <div class="wrap">
-  <!-- Header: title + one-liner -->
   <header>
     <h1 class="title">WinJar</h1>
     <p class="sub">Capture small wins, keep your streak, and add context when you want to reflect.</p>
   </header>
 
   <div class="content">
-    <!-- LEFT: Add + Today -->
-    <section class="card">
-      <div class="card-body">
-        <!-- Personalization banners -->
-        <div class="banner"><strong>Streak:</strong> {{ streak }} day(s) — {{ banner }}</div>
-        <div class="banner"><strong>Weekly Summary:</strong> {{ weekly_summary }}</div>
-
-        <!-- Quick Add form (no win/challenge split) -->
-        <h3>Add a win</h3>
-        <!-- This form is intentionally light: you can log a win in <10s -->
-        <form method="POST" action="/add" class="toolbar">
-          <input type="text" name="text" placeholder="{{ prompt or 'What small win did you handle?' }}" required>
-          <select name="mood">
-            <option value="">Mood</option>
-            <option value="stressed">Stressed</option>
-            <option value="anxious">Anxious</option>
-            <option value="tired">Tired</option>
-            <option value="okay">Okay</option>
-            <option value="focused">Focused</option>
-            <option value="motivated">Motivated</option>
-            <option value="grateful">Grateful</option>
-            <option value="hopeful">Hopeful</option>
-            <option value="great">Great</option>
-          </select>
-          <select name="category">
-            <option value="">Category</option>
-            <option value="school">School</option>
-            <option value="health">Health</option>
-            <option value="social">Social</option>
-            <option value="faith">Faith</option>
-          </select>
-          <button type="submit">Add</button>
-        </form>
-
-        <!-- Optional Elaborate box:
-             If a new win was just created, we reveal an inline textarea for context. -->
-        {% if new_id %}
-          <div class="entry" style="margin-top:14px;">
-            <form method="POST" action="/elaborate">
-              <input type="hidden" name="entry_id" value="{{ new_id }}">
-              <label for="details"><strong>Elaborate (optional):</strong></label>
-              <textarea name="details" id="details" placeholder="Add context: what was challenging, how you handled it, what you learned."></textarea>
-              <div style="margin-top:8px;">
-                <button type="submit">Save elaboration</button>
-              </div>
-            </form>
-          </div>
-        {% endif %}
-
-        <!-- Today’s entries list -->
-        <h3 style="margin-top:18px;">Today</h3>
-        {% if entries_today %}
-          {% for e in entries_today %}
-            <div class="entry">
-              <div>
-                <strong>Win</strong>
-                {% if e.category %}<span class="pill">{{ e.category }}</span>{% endif %}
-                {% if e.mood %}<span class="pill">{{ e.mood }}</span>{% endif %}
-              </div>
-              <div>{{ e.text }}</div>
-              {% if e.details %}
-                <div style="margin-top:8px;"><em>{{ e.details }}</em></div>
-              {% endif %}
-              <div class="meta">{{ e.timestamp }}</div>
-            </div>
-          {% endfor %}
-        {% else %}
-          <div class="entry">No entries yet today — one tiny note starts your streak.</div>
-        {% endif %}
-      </div>
-    </section>
-
-    <!-- RIGHT: Export / Import / Tips -->
-    <aside>
+    <!-- LEFT COLUMN --------------------------------------------------- -->
+    <div>
+      <!-- Card 1: streak + add + today -->
       <section class="card">
         <div class="card-body">
-          <h3>Export</h3>
-          <p><a href="/export">Download JSON export</a></p>
-          <!-- (Import can be added later; keeping demo simple) -->
+          <!-- Banners -->
+          <div class="banner">
+            <strong>Streak:</strong> {{ streak }} day(s) — {{ banner }}
+          </div>
+          <div class="banner">
+            <strong>Weekly Summary:</strong> {{ weekly_summary }}
+          </div>
+
+          <!-- Add a win -->
+          <h3>Add a win</h3>
+          <form method="POST" action="/add" class="toolbar"
+                style="flex-direction: column; align-items: flex-start; gap: 10px;">
+            <!-- Row 1: full-width text box -->
+            <input
+              type="text"
+              name="text"
+              class="win-input"
+              placeholder="{{ prompt or 'What’s one small win worth capturing right now?' }}"
+              required
+            >
+
+            <!-- Row 2: mood + category + add button -->
+            <div style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap;">
+              <select name="mood" style="flex: 1;">
+                <option value="">Mood</option>
+                <option value="disapointed">Stressed</option>
+                <option value="sad">Stressed</option>
+                <option value="stressed">Stressed</option>
+                <option value="anxious">Anxious</option>
+                <option value="tired">Tired</option>
+                <option value="okay">Okay</option>
+                <option value="focused">Focused</option>
+                <option value="motivated">Motivated</option>
+                <option value="grateful">Grateful</option>
+                <option value="hopeful">Hopeful</option>
+                <option value="joyful">Great</option>
+              </select>
+
+              <select name="category" style="flex: 1;">
+                <option value="">Category</option>
+                <option value="school">School</option>
+                <option value="health">Health</option>
+                <option value="social">Social</option>
+                <option value="faith">Faith</option>
+              </select>
+
+              <button type="submit">Add</button>
+            </div>
+          </form>
+
+          <!-- Optional elaboration after a new win -->
+          {% if new_id %}
+            <div class="entry" style="margin-top:14px;">
+              <form method="POST" action="/elaborate">
+                <input type="hidden" name="entry_id" value="{{ new_id }}">
+                <label for="details"><strong>Elaborate (optional):</strong></label>
+                <textarea
+                  name="details"
+                  id="details"
+                  placeholder="Add context: what was challenging, how you handled it, what you learned."
+                ></textarea>
+                <div style="margin-top:8px;">
+                  <button type="submit">Save elaboration</button>
+                </div>
+              </form>
+            </div>
+          {% endif %}
+
+          <!-- Today section -->
+          <h3 style="margin-top:18px;">Today</h3>
+          {% if entries_today %}
+            {% for e in entries_today %}
+              <div class="entry">
+                <div>
+                  <strong>Win</strong>
+                  {% if e.category %}<span class="pill">{{ e.category }}</span>{% endif %}
+                  {% if e.mood %}<span class="pill">{{ e.mood }}</span>{% endif %}
+                </div>
+                <div>{{ e.text }}</div>
+                {% if e.details %}
+                  <div style="margin-top:8px;"><em>{{ e.details }}</em></div>
+                {% endif %}
+                <div class="meta">{{ e.timestamp }}</div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="entry">No entries yet today — one tiny note starts your streak.</div>
+          {% endif %}
         </div>
       </section>
 
-      <section class="card" style="margin-top:12px;">
+      <!-- Card 2: Tips (bottom-left) -->
+      <section class="card" style="margin-top:16px;">
         <div class="card-body">
           <h3>Tips</h3>
-          <ul style="margin:0; padding-left:18px; color:var(--muted);">
+          <ul class="tips-list">
             <li>Keep quick wins short—under 10 seconds to log.</li>
             <li>Use the Elaborate box when you want to add context.</li>
             <li>Set your mood to personalize the prompt.</li>
           </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT COLUMN --------------------------------------------------- -->
+    <aside>
+      <!-- History on top-right -->
+      <section class="card">
+        <div class="card-body">
+          <h3>Last 7 days
+            <span class="history-link">
+              <a href="{{ url_for('full_history') }}">View all history</a>
+            </span>
+          </h3>
+          {% if history_dates %}
+            {% for d in history_dates %}
+              <div class="entry history-day" style="margin-top:6px;">
+                <div class="meta"><strong>{{ d }}</strong></div>
+                {% for e in history[d] %}
+                  <div style="margin-top:4px;">
+                    <div>
+                      <strong>Win</strong>
+                      {% if e.category %}<span class="pill">{{ e.category }}</span>{% endif %}
+                      {% if e.mood %}<span class="pill">{{ e.mood }}</span>{% endif %}
+                    </div>
+                    <div>{{ e.text }}</div>
+                    {% if e.details %}
+                      <div style="margin-top:4px;"><em>{{ e.details }}</em></div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="entry">No history yet — once you have a few days logged, you’ll see them here.</div>
+          {% endif %}
+        </div>
+      </section>
+
+      <!-- Export under history -->
+      <section class="card" style="margin-top:12px;">
+        <div class="card-body">
+          <h3>Export</h3>
+          <p><a href="/export">Download JSON export</a></p>
         </div>
       </section>
     </aside>

@@ -6,17 +6,26 @@
       "details": "The weather was cold, I was so tired after the house move and the guests we had at home.",
       "mood": "",
       "category": "",
-      "date": "2025-11-18",
-      "timestamp": "2025-11-18 15:55"
+      "date": "2025-12-08",
+      "timestamp": "2025-11-18 22:13"
     },
     {
-      "id": "ad9c7eb9-ce93-4458-8396-5ffe4b0604d6",
-      "text": "try coming to school",
+      "id": "eb92297d-e6e8-446b-80f9-54abc5eede1d",
+      "text": "I couldn't go on a walk this week",
+      "details": "This new area is unsafe to walk alone in. I feel sad that I'm losing that habit.",
+      "mood": "Anxious",
+      "category": "Health",
+      "date": "2025-12-10",
+      "timestamp": "2025-11-18 12:45"
+    },
+    {
+      "id": "78c4377b-18c6-48e6-9851-76f96b956f97",
+      "text": "I finished my over 10 page math final exam on time :)",
       "details": "",
-      "mood": "tired",
+      "mood": "motivated",
       "category": "school",
-      "date": "2025-11-18",
-      "timestamp": "2025-11-18 16:03"
+      "date": "2025-12-12",
+      "timestamp": "2025-12-12 15:00"
     }
   ]
 }
