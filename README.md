@@ -37,7 +37,7 @@ It supports:
 
 ## Project Structure
 
-``
+```
 winjar/
 ├── app.py # Flask routes + rendering
 ├── ai.py # Mood prompts, streak messages, weekly summaries
@@ -47,7 +47,7 @@ winjar/
 └── data/
 └── entries.json # Auto-generated data file
 └── README.md 
-``
+```
 
 
 # Running WinJar (VS Code Setup Instructions)
