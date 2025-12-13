@@ -9,6 +9,8 @@ from collections import Counter
 
 # You can freely edit the moods and prompts here.
 MOOD_PROMPTS = {
+    "disappointed": "It's okay to feel let down—what’s one thing that still went right?",
+    "sad": "Be gentle with yourself—what’s one small bright spot from today?",
     "stressed": "Take a breath—what’s one small thing that went right?",
     "anxious": "Name one tiny step you handled today.",
     "tired": "Low energy is okay—note one small thing you still did.",
@@ -17,9 +19,11 @@ MOOD_PROMPTS = {
     "motivated": "Ride the momentum—what win are you proud of?",
     "grateful": "What’s one thing you appreciated today?",
     "hopeful": "What small step today supports the bigger picture?",
-    "great": "Great day! Document one highlight.",
+    "joyful": "Capture one happy moment you want to remember.",
+    "loved": "That’s beautiful—write down a moment you felt connected or cared for.",
     "": "What’s one small win worth capturing right now?"
 }
+
 
 def mood_prompt(mood: str) -> str:
     return MOOD_PROMPTS.get(mood.lower(), MOOD_PROMPTS[""])

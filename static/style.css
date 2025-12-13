@@ -3,6 +3,7 @@
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@400;500;600&display=swap');
 
+/* ---------- Theme Variables ---------- */
 :root {
   --bg: #f7f1e7;
   --card: #f4e1cf;
@@ -29,23 +30,26 @@ body {
   font-family: 'Nunito', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color: var(--text);
 
-  /* Fallback background color (matches image) */
+  /* Fallback background color (matches slide) */
   background-color: var(--bg);
 
   /* Slide-style background image */
   background-image: url("/static/winjar-bg.png");
   background-repeat: no-repeat;
-  background-size: cover;        /* fill the screen */
+  background-size: cover;
   background-position: center top;
-  background-attachment: fixed;  /* nice subtle parallax; remove if it feels weird */
+  background-attachment: fixed;
 }
 
-
-.wrap { min-height: 100vh; display: flex; flex-direction: column; }
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 /* ---------- Header ---------- */
 header {
-  padding: 5px 24px 4px;      /* smaller top/bottom padding */
+  padding: 5px 24px 8px;  /* compact bar */
   background-color: var(--bg);
   border-bottom: 1px solid var(--border);
 }
@@ -55,8 +59,9 @@ header {
   font-family: 'Baloo 2', cursive;
   font-size: 40px;
 }
+
 .sub {
-  margin: 2px 0 0 0;           /* very small gap under "WinJar" */
+  margin: 2px 0 0 0;
   color: var(--muted);
   font-size: 16px;
 }
@@ -64,14 +69,19 @@ header {
 /* ---------- Layout ---------- */
 .content {
   width: 100%;
-  max-width: 1200px; /* wider space */
+  max-width: 1200px;
   margin: 16px auto 40px;
   padding: 0 20px;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 24px;
 }
-@media (max-width: 900px) { .content { grid-template-columns: 1fr; } }
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ---------- Cards ---------- */
 .card {
@@ -80,11 +90,13 @@ header {
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 }
+
 .card-body {
   padding: 18px;
   background: var(--card-soft);
   border-radius: 16px;
 }
+
 .card h3 {
   margin: 0 0 10px;
   font-family: 'Baloo 2', cursive;
@@ -105,7 +117,10 @@ header {
   margin: 6px 0;
   font-size: 14px;
 }
-.banner strong { color: var(--accent-terracotta); }
+
+.banner strong {
+  color: var(--accent-terracotta);
+}
 
 /* ---------- Form (Add a Win) ---------- */
 .toolbar {
@@ -117,7 +132,7 @@ header {
 }
 
 input[type="text"] {
-  flex: 0 0 auto;              /* don't use flex-basis as height anymore */
+  flex: 0 0 auto;        /* prevents flex-basis from turning into height */
   padding: 11px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -131,9 +146,8 @@ input[type="text"] {
   width: 100%;
 }
 
-
 select {
-  flex: 0 1 150px;     /* make dropdowns wider */
+  flex: 0 1 150px;
   padding: 10px 14px;
   border-radius: 999px;
   background: #f9e5d3;
@@ -151,7 +165,10 @@ button {
   cursor: pointer;
   font-size: 14px;
 }
-button:hover { filter: brightness(0.97); }
+
+button:hover {
+  filter: brightness(0.97);
+}
 
 /* ---------- Entries ---------- */
 .entry {
@@ -162,10 +179,12 @@ button:hover { filter: brightness(0.97); }
   background: var(--card);
   border-left: 4px solid var(--accent-sage);
 }
+
 .entry .meta {
   font-size: 12px;
   color: var(--muted);
 }
+
 .pill {
   background: var(--pill);
   font-size: 11px;
@@ -192,6 +211,13 @@ textarea {
   border-top: 1px dashed rgba(0,0,0,0.12);
 }
 
+/* Small "View all" link in Last 7 days header */
+.history-link {
+  float: right;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 /* ---------- Tips List ---------- */
 .tips-list {
   margin: 0;
@@ -206,19 +232,7 @@ a {
   font-weight: 500;
   text-decoration: none;
 }
-a:hover { text-decoration: underline; }
 
-.history-link {
-  float: right;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.history-link a {
-  color: var(--accent-terracotta);
-  text-decoration: none;
-}
-
-.history-link a:hover {
+a:hover {
   text-decoration: underline;
 }

@@ -37,17 +37,17 @@ It supports:
 
 ## Project Structure
 
-```
-winjar/
-├── app.py # Flask routes + rendering
-├── ai.py # Mood prompts, streak messages, weekly summaries
-├── data_access.py # Storage abstraction layer
-├── templates/
-│ └── index.html # Main UI
-└── data/
-└── entries.json # Auto-generated data file
-└── README.md 
-```
+``
+    winjar/
+    ├── app.py # Flask routes + rendering
+    ├── ai.py # Mood prompts, streak messages, weekly summaries
+    ├── data_access.py # Storage abstraction layer
+    ├── templates/
+    │ └── index.html # Main UI
+    └── data/
+    └── entries.json # Auto-generated data file
+    └── README.md 
+``
 
 
 # Running WinJar (VS Code Setup Instructions)
